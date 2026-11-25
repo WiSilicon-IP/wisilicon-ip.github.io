@@ -1,2 +1,1 @@
-# wisilicon-ip.github.io
-WiSilicon WWW
+WiSilicon Electronics
