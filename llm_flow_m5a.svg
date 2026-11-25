@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1000" height="960" version="1.1" viewBox="0 0 1000 960" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans TC','PingFang TC','Microsoft JhengHei',Arial,sans-serif">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8B8168"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#3E8F49"/></marker>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#3A5BA8"/></marker>
+    <marker id="t" markerWidth="10" markerHeight="10" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#1F8A7D"/></marker>
+    <marker id="r" markerWidth="10" markerHeight="10" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#B5533C"/></marker>
+  </defs>
+  <rect width="1000" height="960" fill="#FFFDF7"/>
+  <text x="30" y="38" fill="#2E2A22" font-size="19" font-weight="700">Gemma3-270M 聊天 demo — PS / RISC-V / NPU 分工與資料流</text>
+  <text x="30" y="60" fill="#8B8168" font-size="12.5">ZCU104 · 150 MHz · 模型 gemma-3-270m-it Q8_0 (約 290 MB) 放在 PS DDR · PS 與核心透過 DTCM mailbox 溝通</text>
+  <text x="30" y="96" fill="#2E2A22" font-size="14" text-anchor="start" font-weight="700">① PS DDR 配置 (pynq.allocate 取得的 CMA 連續緩衝區)</text>
+  <rect x="30" y="108" width="640" height="46" rx="4" fill="#FAF6EA" stroke="#C2AE7E" stroke-width="1.3"/>
+  <rect x="30" y="108" width="540" height="46" rx="4" fill="#ECE2C6" stroke="#C2AE7E" stroke-width="1.3"/>
+  <text x="300" y="128" fill="#2E2A22" font-size="12.5" text-anchor="middle" font-weight="700">GGUF 模型 blob (Q8_0 權重 + tokenizer 詞表)</text>
+  <text x="300" y="146" fill="#5B5342" font-size="11" text-anchor="middle" font-family="monospace">buffer[0 .. 0x1400_0000)  核心看到 0x4000_0000</text>
+  <rect x="570" y="108" width="100" height="46" rx="4" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.3"/>
+  <text x="620" y="126" fill="#1F8A7D" font-size="11" text-anchor="middle" font-weight="700">code/data/</text>
+  <text x="620" y="142" fill="#1F8A7D" font-size="11" text-anchor="middle" font-weight="700">KV · logits</text>
+  <text x="620" y="168" fill="#5B5342" font-size="10.5" text-anchor="middle" font-family="monospace">0x5400_0000 起</text>
+  <text x="30" y="178" fill="#5B5342" font-size="11.2" text-anchor="start">CTRL 0x0C (DDR remap) = 緩衝區實體位址 − 0x4000_0000 → SoC 的 0x4000_0000 視窗對到 CMA 緩衝區</text>
+  <rect x="700" y="86" width="280" height="96" rx="6" fill="#E7ECF6" stroke="#3A5BA8" stroke-width="1.3"/>
+  <text x="840" y="106" fill="#3A5BA8" font-size="12.5" text-anchor="middle" font-weight="700">DTCM mailbox @0xA002_3F00</text>
+  <text x="714" y="126" fill="#5B5342" font-size="10.8" text-anchor="start" font-family="monospace">[1] cmd_seq  [2] ack   [4] token  [5] pos</text>
+  <text x="714" y="142" fill="#5B5342" font-size="10.8" text-anchor="start">[6] flags: bit0 want_logits · b1-2 NPU attn</text>
+  <text x="714" y="158" fill="#5B5342" font-size="10.8" text-anchor="start">[7] result  [8] logits 位址  [9-10] cycles</text>
+  <text x="714" y="174" fill="#5B5342" font-size="10.8" text-anchor="start">profile 區塊在 mailbox − 0x100</text>
+  <text x="30" y="212" fill="#2E2A22" font-size="14" text-anchor="start" font-weight="700">② 啟動 (hprv_chat.py → Board.__init__)</text>
+  <rect x="30" y="224" width="150" height="44" rx="5" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.2"/>
+  <text x="105" y="251" fill="#2E2A22" font-size="10.8" text-anchor="middle">Overlay 下載 bitstream</text>
+  <line x1="180" y1="246" x2="189" y2="246" stroke="#1F8A7D" stroke-width="1.3" marker-end="url(#t)"/>
+  <rect x="190" y="224" width="150" height="44" rx="5" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.2"/>
+  <text x="265" y="251" fill="#2E2A22" font-size="10.8" text-anchor="middle">fclk0 = 150 MHz</text>
+  <line x1="340" y1="246" x2="349" y2="246" stroke="#1F8A7D" stroke-width="1.3" marker-end="url(#t)"/>
+  <rect x="350" y="224" width="150" height="44" rx="5" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.2"/>
+  <text x="425" y="251" fill="#2E2A22" font-size="10.8" text-anchor="middle">allocate CMA,寫 remap</text>
+  <line x1="500" y1="246" x2="509" y2="246" stroke="#1F8A7D" stroke-width="1.3" marker-end="url(#t)"/>
+  <rect x="510" y="224" width="150" height="44" rx="5" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.2"/>
+  <text x="585" y="251" fill="#2E2A22" font-size="10.8" text-anchor="middle">模型 + 韌體 → DDR</text>
+  <line x1="660" y1="246" x2="669" y2="246" stroke="#1F8A7D" stroke-width="1.3" marker-end="url(#t)"/>
+  <rect x="670" y="224" width="150" height="44" rx="5" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.2"/>
+  <text x="745" y="251" fill="#2E2A22" font-size="10.8" text-anchor="middle">crt0 → ITCM</text>
+  <line x1="820" y1="246" x2="829" y2="246" stroke="#1F8A7D" stroke-width="1.3" marker-end="url(#t)"/>
+  <rect x="830" y="224" width="150" height="44" rx="5" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.2"/>
+  <text x="905" y="251" fill="#2E2A22" font-size="10.8" text-anchor="middle">start → 等 'HPCH'</text>
+  <text x="30" y="304" fill="#2E2A22" font-size="14" text-anchor="start" font-weight="700">③ 每個 token 的流程</text>
+  <rect x="40" y="316" width="240" height="44" rx="6" fill="#E4F1EE" stroke="#1F8A7D" stroke-width="1.5"/>
+  <text x="160" y="335" fill="#1F8A7D" font-size="13.5" text-anchor="middle" font-weight="700">PS · Python (A53)</text>
+  <text x="160" y="352" fill="#5B5342" font-size="10.8" text-anchor="middle">hprv_chat.py</text>
+  <line x1="160" y1="360" x2="160" y2="930" stroke="#1F8A7D" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <rect x="380" y="316" width="240" height="44" rx="6" fill="#E7ECF6" stroke="#3A5BA8" stroke-width="1.5"/>
+  <text x="500" y="335" fill="#3A5BA8" font-size="13.5" text-anchor="middle" font-weight="700">RISC-V 核心</text>
+  <text x="500" y="352" fill="#5B5342" font-size="10.8" text-anchor="middle">sw/llm/chat_main.c + gemma3.c</text>
+  <line x1="500" y1="360" x2="500" y2="930" stroke="#3A5BA8" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <rect x="720" y="316" width="240" height="44" rx="6" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1.5"/>
+  <text x="840" y="335" fill="#3E8F49" font-size="13.5" text-anchor="middle" font-weight="700">NPU</text>
+  <text x="840" y="352" fill="#5B5342" font-size="10.8" text-anchor="middle">int8 GEMV</text>
+  <line x1="840" y1="360" x2="840" y2="930" stroke="#3E8F49" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <rect x="44" y="372" width="232" height="52" rx="5" fill="#FFFDF7" stroke="#1F8A7D" stroke-width="1.1"/>
+  <text x="54" y="389" fill="#5B5342" font-size="10.8" text-anchor="start">tokenizer (hprv_gguf_tok.py,讀 GGUF)</text>
+  <text x="54" y="404" fill="#5B5342" font-size="10.8" text-anchor="start">套 chat template → token ids</text>
+  <path d="M160,440 L498,440" fill="none" stroke="#1F8A7D" stroke-width="1.6" marker-end="url(#t)"/>
+  <text x="170" y="434" fill="#1F8A7D" font-size="11" text-anchor="start">寫 mailbox:token · pos · flags,cmd_seq++</text>
+  <rect x="384" y="452" width="232" height="36" rx="5" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1.1"/>
+  <text x="394" y="469" fill="#5B5342" font-size="10.8" text-anchor="start">輪詢 cmd_seq → CMD_FORWARD</text>
+  <rect x="384" y="496" width="232" height="36" rx="5" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1.1"/>
+  <text x="394" y="513" fill="#5B5342" font-size="10.8" text-anchor="start">embed(查表 × √640)</text>
+  <rect x="372" y="544" width="600" height="240" rx="8" fill="none" stroke="#8B8168" stroke-width="1.3" stroke-dasharray="6 4"/>
+  <text x="384" y="562" fill="#8B8168" font-size="11.5" text-anchor="start" font-weight="700">× 18 層 (Gemma3 decoder,MQA 4 head / 1 KV head)</text>
+  <rect x="384" y="574" width="232" height="18" rx="3" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1"/>
+  <text x="394" y="587" fill="#2E2A22" font-size="10.8" text-anchor="start">rmsnorm</text>
+  <path d="M500,604 L732,604" fill="none" stroke="#3A5BA8" stroke-width="1.3" marker-end="url(#b)"/>
+  <rect x="734" y="595" width="226" height="18" rx="3" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1"/>
+  <text x="744" y="608" fill="#2E2A22" font-size="10.8" text-anchor="start">Q / K / V 投影 GEMV</text>
+  <rect x="384" y="616" width="232" height="18" rx="3" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1"/>
+  <text x="394" y="629" fill="#2E2A22" font-size="10.8" text-anchor="start">QK-norm + RoPE · 寫 KV cache</text>
+  <path d="M500,646 L732,646" fill="none" stroke="#3A5BA8" stroke-width="1.3" marker-end="url(#b)"/>
+  <rect x="734" y="637" width="226" height="18" rx="3" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1"/>
+  <text x="744" y="650" fill="#2E2A22" font-size="10.8" text-anchor="start">attention score (Q8_0 K cache)</text>
+  <rect x="384" y="658" width="232" height="18" rx="3" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1"/>
+  <text x="394" y="671" fill="#2E2A22" font-size="10.8" text-anchor="start">softmax</text>
+  <path d="M500,688 L732,688" fill="none" stroke="#3A5BA8" stroke-width="1.3" marker-end="url(#b)"/>
+  <rect x="734" y="679" width="226" height="18" rx="3" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1"/>
+  <text x="744" y="692" fill="#2E2A22" font-size="10.8" text-anchor="start">加權 V (轉置 Q8_0 V cache)</text>
+  <path d="M500,709 L732,709" fill="none" stroke="#3A5BA8" stroke-width="1.3" marker-end="url(#b)"/>
+  <rect x="734" y="700" width="226" height="18" rx="3" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1"/>
+  <text x="744" y="713" fill="#2E2A22" font-size="10.8" text-anchor="start">O 投影 GEMV</text>
+  <rect x="384" y="721" width="232" height="18" rx="3" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1"/>
+  <text x="394" y="734" fill="#2E2A22" font-size="10.8" text-anchor="start">rmsnorm</text>
+  <path d="M500,751 L732,751" fill="none" stroke="#3A5BA8" stroke-width="1.3" marker-end="url(#b)"/>
+  <rect x="734" y="742" width="226" height="18" rx="3" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1"/>
+  <text x="744" y="755" fill="#2E2A22" font-size="10.8" text-anchor="start">FFN gate / up / down GEMV</text>
+  <rect x="384" y="763" width="232" height="18" rx="3" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1"/>
+  <text x="394" y="776" fill="#2E2A22" font-size="10.8" text-anchor="start">GELU (tanh 有理近似) · residual</text>
+  <text x="176" y="720" fill="#5B5342" font-size="10.8" text-anchor="start">核心端 norm / RoPE / softmax /</text>
+  <text x="176" y="736" fill="#5B5342" font-size="10.8" text-anchor="start">GELU 用 4-accumulator FP 核心</text>
+  <text x="176" y="752" fill="#5B5342" font-size="10.8" text-anchor="start">(可選 RVV-lite 加速)</text>
+  <path d="M500,812 L732,812" fill="none" stroke="#3A5BA8" stroke-width="1.3" marker-end="url(#b)"/>
+  <rect x="734" y="803" width="226" height="18" rx="3" fill="#EEF5E9" stroke="#3E8F49" stroke-width="1"/>
+  <text x="744" y="816" fill="#2E2A22" font-size="10.8" text-anchor="start">lm_head GEMV (262144 詞) → logits</text>
+  <path d="M840,828 L840,842 L520,842" fill="none" stroke="#3E8F49" stroke-width="1.3" marker-end="url(#g)"/>
+  <text x="560" y="838" fill="#3E8F49" font-size="10.5" text-anchor="start">logits 寫回 DDR</text>
+  <rect x="384" y="850" width="232" height="36" rx="5" fill="#FFFDF7" stroke="#3A5BA8" stroke-width="1.1"/>
+  <text x="394" y="867" fill="#5B5342" font-size="10.8" text-anchor="start">greedy 時核心直接 argmax</text>
+  <text x="394" y="882" fill="#5B5342" font-size="10.8" text-anchor="start">寫 result / cycles / status → ack</text>
+  <path d="M498,898 L162,898" fill="none" stroke="#3A5BA8" stroke-width="1.6" marker-end="url(#b)"/>
+  <text x="180" y="892" fill="#3A5BA8" font-size="11" text-anchor="start">ack(下一個 token id 或 logits 位址)</text>
+  <rect x="44" y="904" width="232" height="40" rx="5" fill="#FFFDF7" stroke="#1F8A7D" stroke-width="1.1"/>
+  <text x="54" y="921" fill="#5B5342" font-size="10.8" text-anchor="start">取樣 (temp / top-k / rep-penalty)</text>
+  <text x="54" y="936" fill="#5B5342" font-size="10.8" text-anchor="start">→ detokenize → 印出 → 下一個 token</text>
+  <text x="176" y="480" fill="#8B8168" font-size="10.8" text-anchor="start">prefill:每個 prompt token</text>
+  <text x="176" y="495" fill="#8B8168" font-size="10.8" text-anchor="start">都跑 forward,只有最後一個</text>
+  <text x="176" y="510" fill="#8B8168" font-size="10.8" text-anchor="start">要 logits (want_logits)</text>
+  <text x="176" y="560" fill="#2E2A22" font-size="11" text-anchor="start" font-weight="700">效能 (150 MHz,dual bitstream):</text>
+  <text x="176" y="577" fill="#5B5342" font-size="10.8" text-anchor="start">decode ≈ 3.2 tok/s (ctx 67–112)</text>
+  <text x="176" y="593" fill="#5B5342" font-size="10.8" text-anchor="start">prefill ≈ 6 tok/s</text>
+  <text x="176" y="609" fill="#5B5342" font-size="10.8" text-anchor="start">純軟體基線 ≈ 0.012 tok/s</text>
+  <text x="176" y="640" fill="#5B5342" font-size="10.8" text-anchor="start">聊天指令:/reset /stats /quit</text>
+  <text x="176" y="656" fill="#5B5342" font-size="10.8" text-anchor="start">--prof 印出每個運算的 cycle</text>
+</svg>

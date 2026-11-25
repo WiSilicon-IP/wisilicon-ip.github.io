@@ -25,6 +25,7 @@
 <nav class="nav" aria-label="Primary">
 <a href="#offer"><span class="zh">產品與服務</span><span class="en">Products</span></a>
 <a href="#m3v">Magpie M3V</a>
+<a href="#m5a">Magpie M5A</a>
 <a href="roadmap.html">Roadmap</a>
 <a href="#method"><span class="zh">驗證方法</span><span class="en">Verification</span></a>
 <a href="#contact"><span class="zh">聯絡</span><span class="en">Contact</span></a>
@@ -37,8 +38,8 @@
 <div class="wrap">
 <div>
 <h1>
-<span class="zh"><span class="nb">RISC-V、RVV 與 NPU IP，</span><br><span class="nb">一路做到車用 SoC ASIC</span></span>
-<span class="en">RISC-V, RVV and NPU IP, built through to automotive SoC ASIC</span>
+<span class="zh"><span class="nb">RISC-V、RVV、NPU IP</span><br><span class="nb">與車用 SoC ASIC</span></span>
+<span class="en">RISC-V, RVV and NPU IP, and automotive SoC ASIC</span>
 </h1>
 <p class="lede">
 <span class="zh">慧承電子（WiSilicon）自行開發 RISC-V CPU、RVV 向量引擎與 NPU 矩陣引擎，並以這些 IP 為核心設計車用 SoC ASIC。每一項規格都附可重跑的驗證證據。</span>
@@ -154,6 +155,7 @@
 <li><span class="zh">TFLM FC / MLP / CNN / MobileNet block</span><span class="en">TFLM FC / MLP / CNN / MobileNet block</span></li>
 <li><b>Gemma-3 270M</b> <span class="zh">decoder layer 已驗證</span><span class="en">decoder layer verified</span></li>
 <li><span class="zh">TCM、雙向 DMA、command queue</span><span class="en">TCM, bidirectional DMA, command queue</span></li>
+<li><b>Magpie M5A</b><span class="zh">：FPGA 實機 150 MHz 執行 Gemma3-270M</span><span class="en">: runs Gemma3-270M on FPGA at 150 MHz</span></li>
 </ul>
 </article>
 <article class="row" id="auto">
@@ -211,6 +213,47 @@
 <a href="soc_arch_v3.svg"><img src="soc_arch_v3.svg" alt="Magpie-M3V two-core SoC architecture: NPU domain with scalar RV32IMF core, RVV vector engine, 256-MAC matrix engine, ITCM/DTCM and DMA, plus host cpu_m1, PLIC, shared memory and peripherals on a shared AXI4 fabric" loading="lazy" width="1000" height="1140"></a>
 <figcaption><span class="zh">Magpie M3V 雙核 SoC 架構。點圖可放大。</span><span class="en">Magpie M3V two-core SoC architecture. Select to enlarge.</span></figcaption>
 </figure>
+</div>
+</div>
+</section>
+<section class="npu" id="m5a">
+<div class="wrap">
+<h2><span class="zh">NPU 關鍵架構與技術：Magpie M5A</span><span class="en">NPU architecture and key techniques: Magpie M5A</span></h2>
+<p class="sub">
+<span class="zh">雙發射 RV32IMF CPU 搭配 16×16 int8 GEMV NPU 的 SoC。已在 AMD ZCU104 FPGA 上以 150 MHz 實機執行 Gemma3-270M 聊天推論，並完成 TSMC 28HPC+ 邏輯合成。</span>
+<span class="en">An SoC pairing a dual-issue RV32IMF CPU with a 16×16 int8 GEMV NPU. It runs Gemma3-270M chat inference on an AMD ZCU104 FPGA at 150 MHz, and has been through TSMC 28HPC+ logic synthesis.</span>
+</p>
+<div class="techgrid">
+<dl class="tech">
+<dt><span class="zh">每拍 256 個 MAC 的 output-stationary 陣列</span><span class="en">Output-stationary array, 256 MACs per cycle</span></dt>
+<dd><span class="zh">16 個 row 各負責一個輸出元素，每個 row 一拍做 16 個 int8 × int8 乘法，經 4 組部分和與加法樹累加成 int32。</span><span class="en">Each of 16 rows owns one output element and does 16 int8 × int8 multiplies per cycle, summed through 4 partial sums and an adder tree into int32.</span></dd>
+<dt><span class="zh">權重雙緩衝</span><span class="en">Double-buffered weights</span></dt>
+<dd><span class="zh">計算目前 16 列的同時預載下一批權重，MAC 陣列不必停下來等記憶體。</span><span class="en">The next batch of weights loads while the current 16 rows compute, so the MAC array never waits on memory.</span></dd>
+<dt><span class="zh">直接讀 llama.cpp 的 Q8_0 權重</span><span class="en">Reads llama.cpp Q8_0 weights directly</span></dt>
+<dd><span class="zh">硬體自行拆解 Q8_0 block（每 32 個 int8 權重配一個 fp16 scale），模型檔不需要另外轉檔。</span><span class="en">Hardware unpacks the Q8_0 block (one fp16 scale per 32 int8 weights), so the model file needs no conversion.</span></dd>
+<dt><span class="zh">NPU 自己搬資料</span><span class="en">The NPU moves its own data</span></dt>
+<dd><span class="zh">以最長 256 拍的 AXI burst 從 DDR 讀權重、把結果寫回 DDR，並與 D-cache 輪流共用同一個 AXI master。</span><span class="en">It reads weights from DDR in AXI bursts of up to 256 beats, writes results back to DDR, and shares one AXI master with the D-cache by round-robin.</span></dd>
+<dt><span class="zh">硬體還原浮點 scale</span><span class="en">Floating-point scale restored in hardware</span></dt>
+<dd><span class="zh">每個 block 的 int32 內積在 NPU 內乘回權重與 activation 的 scale，輸出直接是 fp32。</span><span class="en">Each block’s int32 dot product is multiplied back by the weight and activation scales inside the NPU, so the output is fp32.</span></dd>
+</dl>
+<figure class="fig">
+<a href="npu_m5a.svg"><img src="npu_m5a.svg" alt="Magpie M5A NPU dataflow: DDR weights pass through npu_dma and npu_wload into double-buffered weight banks; a 16-row by 16-lane int8 MAC array multiplies them with the activation buffer; npu_scale applies scaling and outputs in MMIO or DDR mode" loading="lazy" width="1000" height="820"></a>
+<figcaption><span class="zh">Magpie M5A NPU 資料流。點圖可放大。</span><span class="en">Magpie M5A NPU dataflow (labels in Chinese). Select to enlarge.</span></figcaption>
+</figure>
+</div>
+<div class="techgrid">
+<figure class="fig">
+<a href="llm_flow_m5a.svg"><img src="llm_flow_m5a.svg" alt="Gemma3-270M chat demo: the processing system handles tokenizer and sampling, the RISC-V core runs the 18 decoder layers, and every large GEMV goes to the NPU" loading="lazy" width="1000" height="960"></a>
+<figcaption><span class="zh">LLM 推論分工：tokenizer 與取樣在 PS，decoder 在 RISC-V 核心，大型 GEMV 交給 NPU。</span><span class="en">LLM inference split: tokenizer and sampling on the PS, decoder on the RISC-V core, large GEMVs on the NPU.</span></figcaption>
+</figure>
+<dl class="facts light">
+<div><dt>150 MHz</dt><dd><span class="zh">ZCU104 FPGA 實機頻率，CPU、FPU 與 NPU 組態皆時序收斂</span><span class="en">On-board frequency on the ZCU104 FPGA, timing met with CPU, FPU and NPU</span></dd></div>
+<div><dt>≈3.2 tok/s</dt><dd><span class="zh">Gemma3-270M Q8_0 decode 實測；同一顆核心純軟體約 0.012 tok/s</span><span class="en">Measured Gemma3-270M Q8_0 decode; the same core in pure software manages about 0.012 tok/s</span></dd></div>
+<div><dt>≈758 MHz</dt><dd><span class="zh">完整 SoC 在 TSMC 28HPC+ 的合成頻率（尚未 P&amp;R）</span><span class="en">Full-SoC synthesis frequency on TSMC 28HPC+ (before P&amp;R)</span></dd></div>
+<div><dt>1.73 mm²</dt><dd><span class="zh">SoC 合成面積，NPU 與其權重 SRAM 佔 51.9%</span><span class="en">SoC synthesis area; the NPU and its weight SRAM take 51.9%</span></dd></div>
+<div><dt>2.124</dt><dd><span class="zh">CoreMark/MHz，11 級雙發射 RV32IMF 核心實機量測</span><span class="en">CoreMark/MHz measured on board for the 11-stage dual-issue RV32IMF core</span></dd></div>
+<div><dt>347 / 347</dt><dd><span class="zh">ACT4 arch-test 全數通過（base 89、B 180、F 78）</span><span class="en">ACT4 arch-tests passed (base 89, B 180, F 78)</span></dd></div>
+</dl>
 </div>
 </div>
 </section>

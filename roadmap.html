@@ -25,6 +25,7 @@
 <nav class="nav" aria-label="Primary">
 <a href="index.html#offer"><span class="zh">產品與服務</span><span class="en">Products</span></a>
 <a href="index.html#m3v">Magpie M3V</a>
+<a href="index.html#m5a">Magpie M5A</a>
 <a href="roadmap.html" aria-current="page" style="color:var(--ink);font-weight:650">Roadmap</a>
 <a href="index.html#contact"><span class="zh">聯絡</span><span class="en">Contact</span></a>
 </nav>
@@ -40,8 +41,8 @@
 <span class="en">The Magpie family has four IP lines: embedded CPU, Linux application processor, edge AI NPU and external memory controller. They converge on one target: an automotive SoC ASIC.</span>
 </p>
 <p class="asof">
-<span class="zh">各項狀態為 2026 年 7 月的進度。</span>
-<span class="en">Status as of July 2026.</span>
+<span class="zh">各項狀態為 2026 年第三季的進度。</span>
+<span class="en">Status as of Q3 2026.</span>
 </p>
 </div>
 </div>
@@ -125,7 +126,7 @@
 <div class="lane" style="--c:var(--npu)">
 <div class="who">
 <h3><span class="zh">邊緣 AI NPU</span><span class="en">Edge AI NPU</span></h3>
-<p>Magpie M3V<br>RV32IMF + RVV + 256 MAC</p>
+<p>Magpie M3V, M5A<br>RV32IMF + RVV + 256 MAC</p>
 </div>
 <div class="stage">
 <p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
@@ -136,6 +137,12 @@
 <li><span class="zh">TFLM CNN、MobileNet block 與 Gemma-3 270M decoder layer，int8 逐位元相同</span><span class="en">TFLM CNN, MobileNet block and a Gemma-3 270M decoder layer, int8 bit-exact</span></li>
 <li><span class="zh">TSMC28 合成約 460 MHz</span><span class="en">About 460 MHz in TSMC28 synthesis</span></li>
 <li><span class="zh">strip streaming：DDR 權重傳輸 1.8 倍</span><span class="en">Strip streaming: 1.8× DDR weight transfer</span></li>
+</ul>
+<h4>Magpie M5A</h4>
+<ul>
+<li><span class="zh">11 級雙發射 RV32IMF 核心加 16×16 int8 GEMV NPU</span><span class="en">11-stage dual-issue RV32IMF core plus a 16×16 int8 GEMV NPU</span></li>
+<li><span class="zh">ZCU104 FPGA 實機 150 MHz，Gemma3-270M decode 約 3.2 tok/s</span><span class="en">150 MHz on the ZCU104 FPGA, Gemma3-270M decode at about 3.2 tok/s</span></li>
+<li><span class="zh">TSMC 28HPC+ 合成：SoC 約 758 MHz、1.73 mm²</span><span class="en">TSMC 28HPC+ synthesis: SoC about 758 MHz, 1.73 mm²</span></li>
 </ul>
 </div>
 <div class="stage">
@@ -227,6 +234,11 @@
 <td>RV32IMF + Zve32x + 256 MAC</td>
 <td><span class="zh">約 460 MHz</span><span class="en">About 460 MHz</span></td>
 <td><span class="zh">Spike 逐 commit 比對，TFLM 逐位元相同</span><span class="en">Spike per-commit lockstep, bit-exact vs TFLM</span></td></tr>
+<tr><th>Magpie M5A</th>
+<td><span class="zh">CPU + NPU SoC</span><span class="en">CPU + NPU SoC</span></td>
+<td><span class="zh">RV32IMF 11 級雙發射 + 16×16 int8 NPU</span><span class="en">RV32IMF 11-stage dual-issue + 16×16 int8 NPU</span></td>
+<td><span class="zh">約 758 MHz（SoC）</span><span class="en">About 758 MHz (SoC)</span></td>
+<td><span class="zh">ACT4 arch-test 全數通過，FPGA 實機驗證</span><span class="en">ACT4 arch-tests all pass, proven on FPGA</span></td></tr>
 <tr><th>Magpie M6</th>
 <td><span class="zh">應用處理器 SoC</span><span class="en">Application processor SoC</span></td>
 <td><span class="zh">雙核 RV64GC，六級 dual-issue，Sv39</span><span class="en">Dual-core RV64GC, 6-stage dual-issue, Sv39</span></td>
