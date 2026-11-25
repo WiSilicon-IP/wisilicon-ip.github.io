@@ -40,8 +40,8 @@
 <span class="en">The Magpie family has four IP lines: embedded CPU, Linux application processor, edge AI NPU and external memory controller. They converge on one target: an automotive SoC ASIC.</span>
 </p>
 <p class="asof">
-<span class="zh">各項狀態依 GitHub 上各 repo 在 2026 年 7 月的內容整理。</span>
-<span class="en">Status reflects each GitHub repository as of July 2026.</span>
+<span class="zh">各項狀態為 2026 年 7 月的進度。</span>
+<span class="en">Status as of July 2026.</span>
 </p>
 </div>
 </div>
@@ -68,7 +68,7 @@
 <li>riscv-arch-test 74/74</li>
 <li>CoreMark 2.690/MHz<span class="zh">，</span><span class="en">, </span>699.30 MHz @ TSMC 28HPC+</li>
 </ul>
-<h4><a href="https://github.com/WiSilicon-IP/Magpie_M1A">Magpie M1A</a></h4>
+<h4>Magpie M1A</h4>
 <ul>
 <li><span class="zh">加入 Zba / Zbb / Zbs 與 Zicond，乘法器改為管線式</span><span class="en">Adds Zba / Zbb / Zbs and Zicond, with a pipelined multiplier</span></li>
 <li>CoreMark 3.23/MHz</li>
@@ -98,7 +98,7 @@
 </div>
 <div class="stage">
 <p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
-<h4><a href="https://github.com/WiSilicon-IP/Magpie_M6">Magpie M6</a></h4>
+<h4>Magpie M6</h4>
 <ul>
 <li><span class="zh">雙核 RV64GC，六級 dual-issue 管線</span><span class="en">Dual-core RV64GC, 6-stage dual-issue pipeline</span></li>
 <li><span class="zh">Sv39 MMU、PMP、私有 L1 快取</span><span class="en">Sv39 MMU, PMP, private L1 caches</span></li>
@@ -129,7 +129,7 @@
 </div>
 <div class="stage">
 <p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
-<h4><a href="https://github.com/WiSilicon-IP/Magpie_M3V">Magpie M3V</a></h4>
+<h4>Magpie M3V</h4>
 <ul>
 <li><span class="zh">雙核 SoC：host CPU 加 NPU domain</span><span class="en">Two-core SoC: host CPU plus NPU domain</span></li>
 <li><span class="zh">純量、RVV Zve32x 向量、256-MAC 矩陣三引擎</span><span class="en">Scalar, RVV Zve32x vector and 256-MAC matrix engines</span></li>
@@ -160,7 +160,7 @@
 </div>
 <div class="stage">
 <p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
-<h4><a href="https://github.com/WiSilicon-IP/Magpie_DDR">Magpie DDR</a></h4>
+<h4>Magpie DDR</h4>
 <ul>
 <li><span class="zh">為 NPU DMA 串流設計的 DDR4 控制器</span><span class="en">A DDR4 controller cut down for NPU DMA streaming</span></li>
 <li><span class="zh">AXI4 128-bit slave，DFI 3.1 master</span><span class="en">AXI4 128-bit slave, DFI 3.1 master</span></li>
@@ -217,22 +217,22 @@
 <td>RV32IMC<span class="zh">，四級</span><span class="en">, 4-stage</span></td>
 <td>699.30 MHz</td>
 <td>arch-test 74/74<span class="zh">，</span><span class="en">, </span>CoreMark 2.690/MHz</td></tr>
-<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_M1A">Magpie M1A</a></th>
+<tr><th>Magpie M1A</th>
 <td><span class="zh">嵌入式 CPU</span><span class="en">Embedded CPU</span></td>
 <td>RV32IMC + Zba/Zbb/Zbs + Zicond<span class="zh">，四級</span><span class="en">, 4-stage</span></td>
 <td><span class="zh">約 700 MHz（試合成）</span><span class="en">About 700 MHz (trial)</span></td>
 <td>arch-test 74/74<span class="zh">，</span><span class="en">, </span>CoreMark 3.23/MHz</td></tr>
-<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_M3V">Magpie M3V</a></th>
+<tr><th>Magpie M3V</th>
 <td><span class="zh">NPU SoC</span><span class="en">NPU SoC</span></td>
 <td>RV32IMF + Zve32x + 256 MAC</td>
 <td><span class="zh">約 460 MHz</span><span class="en">About 460 MHz</span></td>
 <td><span class="zh">Spike 逐 commit 比對，TFLM 逐位元相同</span><span class="en">Spike per-commit lockstep, bit-exact vs TFLM</span></td></tr>
-<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_M6">Magpie M6</a></th>
+<tr><th>Magpie M6</th>
 <td><span class="zh">應用處理器 SoC</span><span class="en">Application processor SoC</span></td>
 <td><span class="zh">雙核 RV64GC，六級 dual-issue，Sv39</span><span class="en">Dual-core RV64GC, 6-stage dual-issue, Sv39</span></td>
 <td><span class="zh">333 MHz（SoC glue 層）</span><span class="en">333 MHz (SoC glue layer)</span></td>
 <td>RISCOF 217/217<span class="zh">，開機 SMP Linux</span><span class="en">, boots SMP Linux</span></td></tr>
-<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_DDR">Magpie DDR</a></th>
+<tr><th>Magpie DDR</th>
 <td><span class="zh">DDR4 控制器</span><span class="en">DDR4 controller</span></td>
 <td>AXI4 128-bit → DFI 3.1</td>
 <td>—</td>
