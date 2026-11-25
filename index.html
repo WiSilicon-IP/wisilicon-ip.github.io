@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-lang="zh" data-title-zh="WiSilicon Electronics｜RISC-V、RVV、NPU IP 與車用 SoC ASIC" data-title-en="WiSilicon Electronics | RISC-V, RVV, NPU IP and automotive SoC ASIC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WiSilicon Electronics｜RISC-V、RVV、NPU IP 與車用 SoC ASIC</title>
+<meta name="description" content="WiSilicon Electronics 提供 RISC-V CPU IP、RVV 向量引擎、NPU 矩陣引擎與車用 SoC ASIC 設計。RISC-V CPU, RVV vector, NPU IP and automotive SoC ASIC design.">
+<meta property="og:title" content="WiSilicon Electronics">
+<meta property="og:description" content="RISC-V CPU, RVV vector engine, NPU IP and automotive SoC ASIC.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.wisilicon.com/">
+<link rel="canonical" href="https://www.wisilicon.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="top">
+<div class="wrap">
+<a class="brand" href="#top" aria-label="WiSilicon">
+<img src="logo-mark.png" alt="" width="40" height="40"><span><span class="wi">Wi</span><span class="si">Silicon</span></span>
+</a>
+<nav class="nav" aria-label="Primary">
+<a href="#offer"><span class="zh">產品與服務</span><span class="en">Products</span></a>
+<a href="#m3v">Magpie M3V</a>
+<a href="roadmap.html">Roadmap</a>
+<a href="#method"><span class="zh">驗證方法</span><span class="en">Verification</span></a>
+<a href="#contact"><span class="zh">聯絡</span><span class="en">Contact</span></a>
+</nav>
+<button class="lang" id="lang" type="button" aria-label="Switch language">English</button>
+</div>
+</header>
+<main id="top">
+<section class="hero" style="padding:0">
+<div class="wrap">
+<div>
+<h1>
+<span class="zh"><span class="nb">RISC-V、RVV 與 NPU IP，</span><br><span class="nb">一路做到車用 SoC ASIC</span></span>
+<span class="en">RISC-V, RVV and NPU IP, built through to automotive SoC ASIC</span>
+</h1>
+<p class="lede">
+<span class="zh">慧承電子（WiSilicon）自行開發 RISC-V CPU、RVV 向量引擎與 NPU 矩陣引擎，並以這些 IP 為核心設計車用 SoC ASIC。每一項規格都附可重跑的驗證證據。</span>
+<span class="en">WiSilicon builds its own RISC-V CPUs, RVV vector engines and NPU matrix engines, and designs automotive SoC ASICs around them. Every figure comes with verification evidence you can re-run.</span>
+</p>
+<div class="actions">
+<a class="btn solid" href="#offer"><span class="zh">看產品與服務</span><span class="en">See products</span></a>
+<a class="btn" href="https://github.com/WiSilicon-IP/Magpie_M3V"><span class="zh">在 GitHub 看 Magpie M3V</span><span class="en">Magpie M3V on GitHub</span></a>
+</div>
+</div>
+<div>
+<svg class="die" id="die" viewBox="0 0 540 540" role="group" aria-labelledby="dieT">
+<title id="dieT">SoC floorplan: automotive SoC containing a RISC-V host CPU, an RVV vector engine and a 256-MAC NPU matrix engine</title>
+<g id="pads" fill="#C9DAF1"></g>
+<a class="blk" href="#auto">
+<rect class="face" x="26" y="26" width="488" height="488" rx="6" fill="#B8741A"/>
+<text x="44" y="58" font-size="19" font-weight="700"><tspan class="zh">車用 SoC ASIC</tspan><tspan class="en">Automotive SoC ASIC</tspan></text>
+</a>
+<rect x="44" y="76" width="452" height="34" rx="3" fill="#10213B" opacity=".82"/>
+<text x="58" y="98" font-size="13.5" opacity=".9">PLIC / Timer / UART / GPIO / Shared memory</text>
+<rect x="44" y="118" width="452" height="22" rx="3" fill="#10213B"/>
+<text x="270" y="134" font-size="12.5" text-anchor="middle" opacity=".9">AXI4 fabric</text>
+<a class="blk" href="#cpu">
+<rect class="face" x="44" y="148" width="150" height="348" rx="4" fill="#00508C"/>
+<text x="58" y="180" font-size="19" font-weight="700">RISC-V CPU</text>
+<text x="58" y="202" font-size="13.5" opacity=".88">Host core</text>
+<text x="58" y="222" font-size="13.5" opacity=".88">RV32IM(F/C)</text>
+<g fill="none" stroke="#fff" stroke-opacity=".5">
+<rect x="58" y="394" width="122" height="20" rx="2"/><rect x="58" y="420" width="122" height="20" rx="2"/><rect x="58" y="446" width="122" height="20" rx="2"/><rect x="58" y="472" width="122" height="14" rx="2"/>
+</g>
+<text x="119" y="408" font-size="11.5" text-anchor="middle" opacity=".85">Fetch</text>
+<text x="119" y="434" font-size="11.5" text-anchor="middle" opacity=".85">Decode</text>
+<text x="119" y="460" font-size="11.5" text-anchor="middle" opacity=".85">Execute</text>
+</a>
+<a class="blk" href="#rvv">
+<rect class="face" x="202" y="148" width="294" height="112" rx="4" fill="#0A86C2"/>
+<text x="216" y="180" font-size="19" font-weight="700"><tspan class="zh">RVV 向量引擎</tspan><tspan class="en">RVV vector engine</tspan></text>
+<text x="216" y="202" font-size="13.5" opacity=".9">Zve32x, LMUL mf8 – m8</text>
+<g fill="#fff" opacity=".42">
+<rect x="216" y="220" width="266" height="5"/><rect x="216" y="231" width="266" height="5"/><rect x="216" y="242" width="266" height="5"/>
+</g>
+</a>
+<a class="blk" href="#npu">
+<rect class="face" x="202" y="268" width="294" height="228" rx="4" fill="#5B4BA8"/>
+<text x="216" y="300" font-size="19" font-weight="700"><tspan class="zh">NPU 矩陣引擎</tspan><tspan class="en">NPU matrix engine</tspan></text>
+<text x="216" y="322" font-size="13.5" opacity=".9">256 MAC, int8 → int32</text>
+<g id="mac"></g>
+<text x="388" y="372" font-size="12.5" opacity=".9">ITCM / DTCM</text>
+<text x="388" y="392" font-size="12.5" opacity=".9">DMA</text>
+<text x="388" y="412" font-size="12.5" opacity=".9">Command queue</text>
+</a>
+</svg>
+<p class="cap">
+<span class="zh">晶片平面示意圖。點選區塊可跳到對應的產品；紫色區塊裡的 256 個點就是 256 個 MAC。</span>
+<span class="en">Schematic floorplan. Select a block to jump to that product; the 256 dots in the violet block are the 256 MACs.</span>
+</p>
+</div>
+</div>
+</section>
+<section id="offer" style="padding-top:20px">
+<div class="wrap">
+<h2><span class="zh">四項產品與服務</span><span class="en">Four product lines</span></h2>
+<p class="sub">
+<span class="zh">三項 IP 可以單獨授權，也可以整合成一顆 SoC 交付。</span>
+<span class="en">Each IP can be licensed on its own, or delivered integrated as one SoC.</span>
+</p>
+<div class="offer">
+<article class="row" id="cpu">
+<div class="key" style="background:var(--cpu)"></div>
+<div>
+<h3>RISC-V CPU IP</h3>
+<p class="kind"><span class="zh">Magpie M1、M1A 與 M6</span><span class="en">Magpie M1, M1A and M6</span></p>
+</div>
+<p>
+<span class="zh">RV32IMC 的 M-mode 嵌入式 CPU，四級依序管線，含分支預測與 JTAG 除錯。可以只交付核心，也可以交付含 AXI、記憶體與 boot ROM 的運算子系統，FPGA 與 ASIC 流程都有。</span>
+<span class="en">An RV32IMC M-mode embedded CPU with a 4-stage in-order pipeline, branch prediction and JTAG debug. Delivered as a core, or as a compute subsystem with AXI, memory and boot ROM, with both FPGA and ASIC flows.</span>
+</p>
+<ul>
+<li><b>RV32IMC_Zicsr_Zifencei</b><span class="zh">，可選 A 與 PMP</span><span class="en">, optional A and PMP</span></li>
+<li><b>riscv-arch-test 74/74</b></li>
+<li><b>CoreMark 2.690/MHz</b></li>
+<li><b>699.30 MHz</b><span class="zh">，TSMC 28HPC+ 合成結果</span><span class="en">, TSMC 28HPC+ synthesis</span></li>
+<li><b>Magpie M6</b><span class="zh">：雙核 RV64GC，模擬中開機 SMP Linux</span><span class="en">: dual-core RV64GC, boots SMP Linux in simulation</span></li>
+</ul>
+</article>
+<article class="row" id="rvv">
+<div class="key" style="background:var(--rvv)"></div>
+<div>
+<h3><span class="zh">RVV 向量引擎</span><span class="en">RVV vector engine</span></h3>
+<p class="kind"><span class="zh">標準 RISC-V 向量擴充</span><span class="en">Standard RISC-V vector extension</span></p>
+</div>
+<p>
+<span class="zh">依標準 RVV Zve32x 實作的整數向量單元，處理逐元素運算：activation、bias、requantize 與 pooling。因為是標準 ISA，現有的編譯器與函式庫可以直接使用。</span>
+<span class="en">An integer vector unit built to standard RVV Zve32x. It handles element-wise work: activation, bias, requantize and pooling. Because it is standard ISA, existing compilers and libraries work as they are.</span>
+</p>
+<ul>
+<li><b>Zve32x</b><span class="zh">，整數全指令</span><span class="en">, full integer set</span></li>
+<li><b>LMUL mf8 – m8</b><span class="zh"> 全組合</span><span class="en"> full grid</span></li>
+<li><span class="zh">逐 commit 與 <b>Spike</b> 比對</span><span class="en">Per-commit lockstep against <b>Spike</b></span></li>
+</ul>
+</article>
+<article class="row" id="npu">
+<div class="key" style="background:var(--npu)"></div>
+<div>
+<h3><span class="zh">NPU 矩陣引擎</span><span class="en">NPU matrix engine</span></h3>
+<p class="kind"><span class="zh">邊緣 AI 推論加速</span><span class="en">Edge AI inference acceleration</span></p>
+</div>
+<p>
+<span class="zh">256 個 MAC 組成的矩陣引擎，負責 matmul 與卷積這類沿著收縮軸累加的運算。搭配純量核心與向量引擎，跑開源的 int8 TFLM 推論路徑，結果與 TFLM 逐位元相同。</span>
+<span class="en">A 256-MAC matrix engine for matmul and convolution, the operations that accumulate along a contraction axis. Together with the scalar core and vector engine it runs the open-source int8 TFLM inference path with bit-exact results.</span>
+</p>
+<ul>
+<li><b>256 MAC</b>, int8 → int32</li>
+<li><span class="zh">TFLM FC / MLP / CNN / MobileNet block</span><span class="en">TFLM FC / MLP / CNN / MobileNet block</span></li>
+<li><b>Gemma-3 270M</b> <span class="zh">decoder layer 已驗證</span><span class="en">decoder layer verified</span></li>
+<li><span class="zh">TCM、雙向 DMA、command queue</span><span class="en">TCM, bidirectional DMA, command queue</span></li>
+</ul>
+</article>
+<article class="row" id="auto">
+<div class="key" style="background:var(--auto)"></div>
+<div>
+<h3><span class="zh">車用 SoC ASIC</span><span class="en">Automotive SoC ASIC</span></h3>
+<p class="kind"><span class="zh">客製晶片設計</span><span class="en">Custom silicon design</span></p>
+</div>
+<p>
+<span class="zh">以自有的 CPU、向量與 NPU IP 為核心，替車用應用設計 SoC ASIC。從架構規格、RTL、驗證到合成與時序收斂，由同一個團隊負責。</span>
+<span class="en">SoC ASICs for automotive applications, built around our own CPU, vector and NPU IP. One team carries the work from architecture spec through RTL and verification to synthesis and timing closure.</span>
+</p>
+<ul>
+<li><span class="zh">自有 IP，不依賴第三方 CPU 授權</span><span class="en">Our own IP, no third-party CPU licence</span></li>
+<li><span class="zh">AXI4 匯流排、PLIC、周邊整合</span><span class="en">AXI4 fabric, PLIC and peripheral integration</span></li>
+<li><span class="zh">TSMC 28nm 合成流程已建立</span><span class="en">TSMC 28nm synthesis flow in place</span></li>
+</ul>
+</article>
+</div>
+<p class="more"><a class="btn" href="roadmap.html"><span class="zh">看 Magpie SoC Roadmap</span><span class="en">See the Magpie SoC roadmap</span></a></p>
+</div>
+</section>
+<section class="ref" id="m3v">
+<div class="wrap">
+<h2><span class="zh">參考設計：Magpie M3V</span><span class="en">Reference design: Magpie M3V</span></h2>
+<p class="sub">
+<span class="zh">一顆可合成的雙核 RISC-V SoC：host CPU 透過 AXI 驅動自建的 NPU domain。RTL、驗證流程與報告都公開在 GitHub。</span>
+<span class="en">A synthesizable two-core RISC-V SoC: a host CPU drives a self-built NPU domain over AXI. The RTL, verification flow and reports are public on GitHub.</span>
+</p>
+<div class="refgrid">
+<div>
+<table class="engines">
+<thead><tr>
+<th><span class="zh">引擎</span><span class="en">Engine</span></th>
+<th><span class="zh">負責的工作</span><span class="en">Work</span></th>
+<th><span class="zh">介面</span><span class="en">Interface</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span class="dot" style="background:#4C86D1"></span><span class="zh">純量</span><span class="en">Scalar</span></td>
+<td><span class="zh">迴圈、位址產生、分支、下指令</span><span class="en">Loops, address generation, branches, issuing commands</span></td><td>RV32IM(F)</td></tr>
+<tr><td><span class="dot" style="background:#00AFF5"></span><span class="zh">向量</span><span class="en">Vector</span></td>
+<td><span class="zh">ReLU、bias、rescale、pooling</span><span class="en">ReLU, bias, rescale, pooling</span></td><td>RVV Zve32x</td></tr>
+<tr><td><span class="dot" style="background:#8E7FE0"></span><span class="zh">矩陣</span><span class="en">Matrix</span></td>
+<td><span class="zh">matmul、卷積、QKᵀ</span><span class="en">Matmul, convolution, QKᵀ</span></td><td><span class="zh">自訂命令</span><span class="en">Custom command</span></td></tr>
+</tbody>
+</table>
+<dl class="facts">
+<div><dt>~460 MHz</dt><dd><span class="zh">完整 npu_top 在 TSMC28 的合成時序，由 166.7 MHz 提升 2.8 倍</span><span class="en">Full npu_top synthesis timing on TSMC28, up 2.8× from 166.7 MHz</span></dd></div>
+<div><dt>−50%</dt><dd><span class="zh">同一次改版減少的 cell 面積</span><span class="en">Cell area removed in the same rework</span></dd></div>
+<div><dt>1.8×</dt><dd><span class="zh">strip streaming 讓 DDR 權重傳輸由 2.86 提升到 5.27 B/cyc（校準延遲模型）</span><span class="en">DDR weight transfer with strip streaming, 2.86 to 5.27 B/cyc on the calibrated latency model</span></dd></div>
+<div><dt>bit-exact</dt><dd><span class="zh">int8 推論結果與 TFLM 逐位元相同</span><span class="en">int8 inference results match TFLM bit for bit</span></dd></div>
+</dl>
+<a class="btn" href="https://github.com/WiSilicon-IP/Magpie_M3V"><span class="zh">開啟 Magpie_M3V 原始碼</span><span class="en">Open the Magpie_M3V source</span></a>
+</div>
+<figure>
+<a href="soc_arch_v3.svg"><img src="soc_arch_v3.svg" alt="Magpie-M3V two-core SoC architecture: NPU domain with scalar RV32IMF core, RVV vector engine, 256-MAC matrix engine, ITCM/DTCM and DMA, plus host cpu_m1, PLIC, shared memory and peripherals on a shared AXI4 fabric" loading="lazy" width="1000" height="1140"></a>
+<figcaption><span class="zh">Magpie M3V 雙核 SoC 架構。點圖可放大。</span><span class="en">Magpie M3V two-core SoC architecture. Select to enlarge.</span></figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="method">
+<div class="wrap">
+<h2><span class="zh">我們怎麼驗證</span><span class="en">How we verify</span></h2>
+<p class="sub">
+<span class="zh">正確與否由比對結果決定，而不是「看起來對」或 lint 通過。</span>
+<span class="en">Correctness is decided by comparison results, not by “looks right” or a clean lint.</span>
+</p>
+<div class="method">
+<div>
+<h3><span class="zh">逐 commit 與 Spike 比對</span><span class="en">Per-commit lockstep with Spike</span></h3>
+<p><span class="zh">RTL 每一筆 commit 的結果都與 Spike ISS 對照，向量 CSR 也在比對範圍內。</span><span class="en">Every commit the RTL retires is compared against the Spike ISS, vector CSRs included.</span></p>
+</div>
+<div>
+<h3><span class="zh">逐位元的 golden 資料</span><span class="en">Bit-accurate golden data</span></h3>
+<p><span class="zh">矩陣運算對照 NumPy golden，推論結果對照 TFLM。換傳輸路徑不能改變任何一個位元組。</span><span class="en">Matrix math is checked against a NumPy golden and inference against TFLM. Changing the transport path may not change a single byte.</span></p>
+</div>
+<div>
+<h3><span class="zh">一行指令重跑</span><span class="en">Re-run with one command</span></h3>
+<p><span class="zh">核心流程只用開源工具：Verilator、Spike 與 RISC-V GCC。沒有執行過的 gate 不會標成通過。</span><span class="en">The core flow uses only open-source tools: Verilator, Spike and RISC-V GCC. A gate that has not run is never marked as passed.</span></p>
+</div>
+</div>
+</div>
+</section>
+<section class="contact" id="contact">
+<div class="wrap">
+<div>
+<h2><span class="zh">聯絡我們</span><span class="en">Contact</span></h2>
+<p>
+<span class="zh">想評估 IP 授權或討論車用 SoC ASIC 專案，請從 GitHub 與我們聯繫。</span>
+<span class="en">To evaluate an IP licence or discuss an automotive SoC ASIC project, reach us through GitHub.</span>
+</p>
+</div>
+<!-- TODO: 補上公司聯絡信箱，例如 <a class="btn solid" href="mailto:...">寄信給我們</a> -->
+<a class="btn solid" href="https://github.com/WiSilicon-IP"><span class="zh">前往 WiSilicon-IP GitHub</span><span class="en">Go to WiSilicon-IP on GitHub</span></a>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap" style="margin-bottom:14px"><img src="logo-full.png" alt="WiSilicon Electronics 慧承電子股份有限公司" width="260" height="61" style="height:auto;max-width:100%"></div>
+<div class="wrap"><span>© <span id="yr">2026</span> WiSilicon Electronics　慧承電子股份有限公司</span><span>www.wisilicon.com</span></div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-lang="zh" data-title-zh="Magpie SoC Roadmap｜WiSilicon Electronics" data-title-en="Magpie SoC Roadmap | WiSilicon Electronics">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Magpie SoC Roadmap｜WiSilicon Electronics</title>
+<meta name="description" content="Magpie 系列 IP 的現況與方向：M1 / M1A 嵌入式 CPU、M6 RV64GC 應用處理器、M3V NPU SoC 與 Magpie DDR 記憶體控制器，匯集成車用 SoC ASIC。">
+<meta property="og:title" content="Magpie SoC Roadmap">
+<meta property="og:description" content="Magpie M1 / M1A / M6 / M3V / DDR: status and direction toward an automotive SoC ASIC.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.wisilicon.com/roadmap.html">
+<link rel="canonical" href="https://www.wisilicon.com/roadmap.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="top">
+<div class="wrap">
+<a class="brand" href="index.html" aria-label="WiSilicon">
+<img src="logo-mark.png" alt="" width="40" height="40"><span><span class="wi">Wi</span><span class="si">Silicon</span></span>
+</a>
+<nav class="nav" aria-label="Primary">
+<a href="index.html#offer"><span class="zh">產品與服務</span><span class="en">Products</span></a>
+<a href="index.html#m3v">Magpie M3V</a>
+<a href="roadmap.html" aria-current="page" style="color:var(--ink);font-weight:650">Roadmap</a>
+<a href="index.html#contact"><span class="zh">聯絡</span><span class="en">Contact</span></a>
+</nav>
+<button class="lang" id="lang" type="button" aria-label="Switch language">English</button>
+</div>
+</header>
+<main>
+<div class="pagehead">
+<div class="wrap">
+<h1>Magpie SoC Roadmap</h1>
+<p class="lede">
+<span class="zh">Magpie 系列有四條 IP 產品線：嵌入式 CPU、Linux 應用處理器、邊緣 AI NPU 與外部記憶體控制器。它們最後匯集成同一個目標：車用 SoC ASIC。</span>
+<span class="en">The Magpie family has four IP lines: embedded CPU, Linux application processor, edge AI NPU and external memory controller. They converge on one target: an automotive SoC ASIC.</span>
+</p>
+<p class="asof">
+<span class="zh">各項狀態依 GitHub 上各 repo 在 2026 年 7 月的內容整理。</span>
+<span class="en">Status reflects each GitHub repository as of July 2026.</span>
+</p>
+</div>
+</div>
+<section style="padding-top:12px">
+<div class="wrap">
+<div class="lanes">
+<div class="lanehead" aria-hidden="true">
+<div><span class="zh">產品線</span><span class="en">Line</span></div>
+<div><span class="zh">已完成</span><span class="en">Done</span></div>
+<div><span class="zh">進行中</span><span class="en">In progress</span></div>
+<div><span class="zh">下一步</span><span class="en">Next</span></div>
+</div>
+<!-- embedded CPU -->
+<div class="lane" style="--c:var(--cpu)">
+<div class="who">
+<h3><span class="zh">嵌入式 CPU</span><span class="en">Embedded CPU</span></h3>
+<p>Magpie M1, M1A<br>RV32, M-mode</p>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
+<h4>Magpie M1</h4>
+<ul>
+<li>RV32IMC<span class="zh">，四級管線，JTAG 除錯</span><span class="en">, 4-stage pipeline, JTAG debug</span></li>
+<li>riscv-arch-test 74/74</li>
+<li>CoreMark 2.690/MHz<span class="zh">，</span><span class="en">, </span>699.30 MHz @ TSMC 28HPC+</li>
+</ul>
+<h4><a href="https://github.com/WiSilicon-IP/Magpie_M1A">Magpie M1A</a></h4>
+<ul>
+<li><span class="zh">加入 Zba / Zbb / Zbs 與 Zicond，乘法器改為管線式</span><span class="en">Adds Zba / Zbb / Zbs and Zicond, with a pipelined multiplier</span></li>
+<li>CoreMark 3.23/MHz</li>
+<li><span class="zh">28nm 試合成約 700 MHz、≈80.7 kGE、約 14 mW</span><span class="en">28nm trial synthesis: about 700 MHz, ≈80.7 kGE, about 14 mW</span></li>
+<li><span class="zh">參考 SoC：CLINT、PLIC、UART、Debug Module</span><span class="en">Reference SoC: CLINT, PLIC, UART, Debug Module</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">進行中</span><span class="en">In progress</span></p>
+<ul>
+<li><span class="zh">M1A 作為 Magpie M3V 的 host 核心，隨 M3V SoC 一起整合驗證</span><span class="en">M1A serves as the host core of Magpie M3V and is integrated and verified with that SoC</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">下一步</span><span class="en">Next</span></p>
+<ul>
+<li><span class="zh">M1A 支援 RV32A 原子指令</span><span class="en">RV32A atomics on M1A</span></li>
+<li><span class="zh">Zb 擴充的正式架構測試（待官方測試套件）</span><span class="en">Architectural tests for the Zb extensions, once an official suite exists</span></li>
+</ul>
+</div>
+</div>
+<!-- application processor -->
+<div class="lane" style="--c:var(--cpu)">
+<div class="who">
+<h3><span class="zh">Linux 應用處理器</span><span class="en">Linux application processor</span></h3>
+<p>Magpie M6<br>RV64GC, M/S/U</p>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
+<h4><a href="https://github.com/WiSilicon-IP/Magpie_M6">Magpie M6</a></h4>
+<ul>
+<li><span class="zh">雙核 RV64GC，六級 dual-issue 管線</span><span class="en">Dual-core RV64GC, 6-stage dual-issue pipeline</span></li>
+<li><span class="zh">Sv39 MMU、PMP、私有 L1 快取</span><span class="en">Sv39 MMU, PMP, private L1 caches</span></li>
+<li>RISCOF 217/217<span class="zh">，Spike 比對 124/124</span><span class="en">, Spike co-sim 124/124</span></li>
+<li><span class="zh">在模擬器上開機雙核 SMP Linux 到互動 userspace</span><span class="en">Boots 2-hart SMP Linux to an interactive userspace in simulation</span></li>
+<li><span class="zh">全 RTL SoC：CLINT、PLIC、UART、QSPI XIP 開機</span><span class="en">All-RTL SoC: CLINT, PLIC, UART, QSPI XIP boot</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">進行中</span><span class="en">In progress</span></p>
+<ul>
+<li><span class="zh">SoC 簽核：lint、CDC 與 TSMC28 合成（glue 層已達 333 MHz）</span><span class="en">SoC sign-off: lint, CDC and TSMC28 synthesis (glue layer meets 333 MHz)</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">下一步</span><span class="en">Next</span></p>
+<ul>
+<li><span class="zh">Debug Module 接上核心，支援 JTAG 除錯</span><span class="en">Wire the Debug Module into the core for JTAG debug</span></li>
+<li><span class="zh">完整 SoC 的合成與 FPGA 建置</span><span class="en">Full-SoC synthesis and an FPGA build</span></li>
+</ul>
+</div>
+</div>
+<!-- NPU -->
+<div class="lane" style="--c:var(--npu)">
+<div class="who">
+<h3><span class="zh">邊緣 AI NPU</span><span class="en">Edge AI NPU</span></h3>
+<p>Magpie M3V<br>RV32IMF + RVV + 256 MAC</p>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
+<h4><a href="https://github.com/WiSilicon-IP/Magpie_M3V">Magpie M3V</a></h4>
+<ul>
+<li><span class="zh">雙核 SoC：host CPU 加 NPU domain</span><span class="en">Two-core SoC: host CPU plus NPU domain</span></li>
+<li><span class="zh">純量、RVV Zve32x 向量、256-MAC 矩陣三引擎</span><span class="en">Scalar, RVV Zve32x vector and 256-MAC matrix engines</span></li>
+<li><span class="zh">TFLM CNN、MobileNet block 與 Gemma-3 270M decoder layer，int8 逐位元相同</span><span class="en">TFLM CNN, MobileNet block and a Gemma-3 270M decoder layer, int8 bit-exact</span></li>
+<li><span class="zh">TSMC28 合成約 460 MHz</span><span class="en">About 460 MHz in TSMC28 synthesis</span></li>
+<li><span class="zh">strip streaming：DDR 權重傳輸 1.8 倍</span><span class="en">Strip streaming: 1.8× DDR weight transfer</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">進行中</span><span class="en">In progress</span></p>
+<ul>
+<li><span class="zh">雙 AXI 加 bridge 的目標匯流排：窄的控制 AXI 與寬度隨 MAC 陣列調整的資料 AXI</span><span class="en">Target two-AXI plus bridge fabric: a narrow control AXI and a data AXI whose width tracks the MAC array</span></li>
+<li><span class="zh">搭配 Magpie DDR 的解碼速度推估：由約 8.7 經 15.5，朝 25 – 30 tok/s</span><span class="en">Projected decode speed with Magpie DDR: from about 8.7 through 15.5 toward 25 – 30 tok/s</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">下一步</span><span class="en">Next</span></p>
+<ul>
+<li><span class="zh">50 tok/s 以上需要低於 int8 的權重量化，或更寬的 DRAM</span><span class="en">Beyond 50 tok/s needs weight quantization below int8, or a wider DRAM part</span></li>
+</ul>
+</div>
+</div>
+<!-- DDR -->
+<div class="lane" style="--c:#2F4858">
+<div class="who">
+<h3><span class="zh">外部記憶體</span><span class="en">External memory</span></h3>
+<p>Magpie DDR<br>DDR4, AXI4 → DFI</p>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">已完成</span><span class="en">Done</span></p>
+<h4><a href="https://github.com/WiSilicon-IP/Magpie_DDR">Magpie DDR</a></h4>
+<ul>
+<li><span class="zh">為 NPU DMA 串流設計的 DDR4 控制器</span><span class="en">A DDR4 controller cut down for NPU DMA streaming</span></li>
+<li><span class="zh">AXI4 128-bit slave，DFI 3.1 master</span><span class="en">AXI4 128-bit slave, DFI 3.1 master</span></li>
+<li><span class="zh">權重串流達 ×16 DDR4-3200 峰值的約 73%</span><span class="en">About 73% of ×16 DDR4-3200 peak on the weight stream</span></li>
+<li><span class="zh">對照 JEDEC 行為模型逐位元驗證，512 MB 與 1 GB 兩種設定</span><span class="en">Bit-exact against a JEDEC-behavioural golden, in 512 MB and 1 GB configurations</span></li>
+</ul>
+</div>
+<div class="stage">
+<p class="tag"><span class="zh">進行中</span><span class="en">In progress</span></p>
+<ul>
+<li><span class="zh">與 Magpie M3V 寬資料 AXI 的整合 bring-up</span><span class="en">Integration bring-up on Magpie M3V’s wide data AXI</span></li>
+</ul>
+</div>
+<div class="stage none"><span aria-hidden="true">—</span></div>
+</div>
+</div>
+<div class="goal" id="auto">
+<div>
+<span class="state"><span class="zh">規劃方向</span><span class="en">Planned direction</span></span>
+<h3><span class="zh">車用 SoC ASIC</span><span class="en">Automotive SoC ASIC</span></h3>
+<p>
+<span class="zh">四條產品線整合成一顆晶片：應用處理器跑 Linux，NPU 負責推論，控制核心處理即時工作，DDR 控制器供應權重頻寬。</span>
+<span class="en">The four lines integrate into one chip: the application processor runs Linux, the NPU handles inference, the control core handles real-time work, and the DDR controller supplies weight bandwidth.</span>
+</p>
+</div>
+<ul class="parts">
+<li style="--c:#4C86D1"><b>Magpie M6</b><span class="zh">Linux 應用處理器</span><span class="en">Linux application processor</span></li>
+<li style="--c:#8E7FE0"><b>Magpie M3V</b><span class="zh">NPU 推論</span><span class="en">NPU inference</span></li>
+<li style="--c:#4C86D1"><b>Magpie M1A</b><span class="zh">即時控制核心</span><span class="en">Real-time control core</span></li>
+<li style="--c:#8FA1AE"><b>Magpie DDR</b><span class="zh">DDR4 記憶體控制器</span><span class="en">DDR4 memory controller</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section style="padding-top:8px">
+<div class="wrap">
+<h2><span class="zh">Magpie 系列一覽</span><span class="en">The Magpie family at a glance</span></h2>
+<p class="sub">
+<span class="zh">頻率皆為 28nm 合成結果，不是矽晶實測。</span>
+<span class="en">All frequencies are 28nm synthesis results, not silicon measurements.</span>
+</p>
+<div class="tablewrap">
+<table class="family">
+<thead><tr>
+<th>IP</th>
+<th><span class="zh">類型</span><span class="en">Type</span></th>
+<th><span class="zh">架構</span><span class="en">Architecture</span></th>
+<th><span class="zh">合成頻率</span><span class="en">Synthesis</span></th>
+<th><span class="zh">驗證</span><span class="en">Verification</span></th>
+</tr></thead>
+<tbody>
+<tr><th>Magpie M1</th>
+<td><span class="zh">嵌入式 CPU</span><span class="en">Embedded CPU</span></td>
+<td>RV32IMC<span class="zh">，四級</span><span class="en">, 4-stage</span></td>
+<td>699.30 MHz</td>
+<td>arch-test 74/74<span class="zh">，</span><span class="en">, </span>CoreMark 2.690/MHz</td></tr>
+<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_M1A">Magpie M1A</a></th>
+<td><span class="zh">嵌入式 CPU</span><span class="en">Embedded CPU</span></td>
+<td>RV32IMC + Zba/Zbb/Zbs + Zicond<span class="zh">，四級</span><span class="en">, 4-stage</span></td>
+<td><span class="zh">約 700 MHz（試合成）</span><span class="en">About 700 MHz (trial)</span></td>
+<td>arch-test 74/74<span class="zh">，</span><span class="en">, </span>CoreMark 3.23/MHz</td></tr>
+<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_M3V">Magpie M3V</a></th>
+<td><span class="zh">NPU SoC</span><span class="en">NPU SoC</span></td>
+<td>RV32IMF + Zve32x + 256 MAC</td>
+<td><span class="zh">約 460 MHz</span><span class="en">About 460 MHz</span></td>
+<td><span class="zh">Spike 逐 commit 比對，TFLM 逐位元相同</span><span class="en">Spike per-commit lockstep, bit-exact vs TFLM</span></td></tr>
+<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_M6">Magpie M6</a></th>
+<td><span class="zh">應用處理器 SoC</span><span class="en">Application processor SoC</span></td>
+<td><span class="zh">雙核 RV64GC，六級 dual-issue，Sv39</span><span class="en">Dual-core RV64GC, 6-stage dual-issue, Sv39</span></td>
+<td><span class="zh">333 MHz（SoC glue 層）</span><span class="en">333 MHz (SoC glue layer)</span></td>
+<td>RISCOF 217/217<span class="zh">，開機 SMP Linux</span><span class="en">, boots SMP Linux</span></td></tr>
+<tr><th><a href="https://github.com/WiSilicon-IP/Magpie_DDR">Magpie DDR</a></th>
+<td><span class="zh">DDR4 控制器</span><span class="en">DDR4 controller</span></td>
+<td>AXI4 128-bit → DFI 3.1</td>
+<td>—</td>
+<td><span class="zh">對照 JEDEC 行為模型逐位元相同</span><span class="en">Bit-exact vs JEDEC-behavioural golden</span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="more"><a class="btn" href="index.html#contact"><span class="zh">聯絡我們討論專案</span><span class="en">Contact us about a project</span></a></p>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap" style="margin-bottom:14px"><img src="logo-full.png" alt="WiSilicon Electronics 慧承電子股份有限公司" width="260" height="61" style="height:auto;max-width:100%"></div>
+<div class="wrap"><span>© <span id="yr">2026</span> WiSilicon Electronics　慧承電子股份有限公司</span><span>www.wisilicon.com</span></div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
